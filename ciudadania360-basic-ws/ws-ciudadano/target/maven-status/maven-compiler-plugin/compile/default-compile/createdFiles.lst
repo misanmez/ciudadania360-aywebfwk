@@ -1,0 +1,10 @@
+es\valencia\ciudadania360\ws\ciudadano\entity\CiudadanoRequest.class
+es\valencia\ciudadania360\ws\ciudadano\ws\CiudadanoWebService.class
+es\valencia\ciudadania360\ws\ciudadano\entity\CiudadanoResponse.class
+es\valencia\ciudadania360\ws\ciudadano\service\CiudadanoMapperImpl.class
+es\valencia\ciudadania360\ws\ciudadano\service\CiudadanoMapper.class
+es\valencia\ciudadania360\ws\ciudadano\service\CiudadanoService.class
+es\valencia\ciudadania360\ws\ciudadano\entity\Ciudadano$CiudadanoBuilder.class
+es\valencia\ciudadania360\ws\ciudadano\entity\Ciudadano.class
+es\valencia\ciudadania360\ws\ciudadano\entity\CiudadanoResponse$CiudadanoResponseBuilder.class
+es\valencia\ciudadania360\ws\ciudadano\entity\CiudadanoRequest$CiudadanoRequestBuilder.class
