@@ -13,5 +13,25 @@
     <artifactId>ciudadania360-common-schematypes</artifactId>
     <name>ciudadania360-common-schematypes</name>
     <packaging>jar</packaging>
-    <description>Módulo ciudadania360-common-schematypes del sistema Ciudadania360</description>
+    <description>Módulo ciudadania360-common-schematypes del sistema Ciudadania360 - DTOs y tipos compartidos</description>
+
+    <dependencies>
+        <!-- Lombok para DTOs -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
+        
+        <!-- Jakarta Validation para validaciones -->
+        <dependency>
+            <groupId>jakarta.validation</groupId>
+            <artifactId>jakarta.validation-api</artifactId>
+        </dependency>
+        
+        <!-- Jackson para serialización JSON -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-annotations</artifactId>
+        </dependency>
+    </dependencies>
 </project>

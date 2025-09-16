@@ -1,0 +1,7 @@
+es\valencia\ciudadania360\core\entity\Ciudadano$CiudadanoBuilder.class
+es\valencia\ciudadania360\core\mapper\CiudadanoMapperImpl.class
+es\valencia\ciudadania360\core\mapper\CiudadanoMapper.class
+es\valencia\ciudadania360\core\repository\CiudadanoRepository.class
+es\valencia\ciudadania360\core\service\CiudadanoService.class
+es\valencia\ciudadania360\core\entity\Ciudadano$CiudadanoBuilderImpl.class
+es\valencia\ciudadania360\core\entity\Ciudadano.class

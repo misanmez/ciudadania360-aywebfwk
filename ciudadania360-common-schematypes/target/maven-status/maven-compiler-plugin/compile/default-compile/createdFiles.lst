@@ -1,0 +1,12 @@
+es\valencia\ciudadania360\common\dto\CiudadanoDTO$CiudadanoDTOBuilder.class
+es\valencia\ciudadania360\common\dto\CiudadanoDTO.class
+es\valencia\ciudadania360\common\dto\response\CiudadanoResponseDTO$CiudadanoResponseDTOBuilderImpl.class
+es\valencia\ciudadania360\common\dto\request\BaseRequestDTO.class
+es\valencia\ciudadania360\common\dto\response\BaseResponseDTO.class
+es\valencia\ciudadania360\common\dto\request\CiudadanoRequestDTO$CiudadanoRequestDTOBuilder.class
+es\valencia\ciudadania360\common\dto\response\BaseResponseDTO$BaseResponseDTOBuilder.class
+es\valencia\ciudadania360\common\dto\request\CiudadanoRequestDTO$CiudadanoRequestDTOBuilderImpl.class
+es\valencia\ciudadania360\common\dto\request\BaseRequestDTO$BaseRequestDTOBuilder.class
+es\valencia\ciudadania360\common\dto\request\CiudadanoRequestDTO.class
+es\valencia\ciudadania360\common\dto\response\CiudadanoResponseDTO.class
+es\valencia\ciudadania360\common\dto\response\CiudadanoResponseDTO$CiudadanoResponseDTOBuilder.class

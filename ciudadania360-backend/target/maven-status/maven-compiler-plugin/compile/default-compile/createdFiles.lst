@@ -1,0 +1,5 @@
+es\valencia\ciudadania360\backend\config\ServiceConfig.class
+es\valencia\ciudadania360\backend\config\CxfConfig.class
+es\valencia\ciudadania360\backend\Application.class
+es\valencia\ciudadania360\backend\controller\HealthController.class
+es\valencia\ciudadania360\backend\config\SecurityConfig.class

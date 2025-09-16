@@ -1,8 +1,10 @@
 package es.valencia.ciudadania360.ws.ciudadano.ws;
 
-import es.valencia.ciudadania360.ws.ciudadano.entity.CiudadanoRequest;
-import es.valencia.ciudadania360.ws.ciudadano.entity.CiudadanoResponse;
-import es.valencia.ciudadania360.ws.ciudadano.service.CiudadanoService;
+import es.valencia.ciudadania360.core.entity.Ciudadano;
+import es.valencia.ciudadania360.core.service.CiudadanoService;
+import es.valencia.ciudadania360.common.dto.request.CiudadanoRequestDTO;
+import es.valencia.ciudadania360.common.dto.response.CiudadanoResponseDTO;
+import es.valencia.ciudadania360.core.mapper.CiudadanoMapper;
 import jakarta.jws.WebMethod;
 import jakarta.jws.WebParam;
 import jakarta.jws.WebService;
@@ -14,6 +16,7 @@ import java.util.Optional;
 
 /**
  * Servicio Web SOAP para Ciudadano
+ * Esta es la capa de servicios web que expone la funcionalidad del backend
  */
 @WebService(serviceName = "CiudadanoWebService", 
            portName = "CiudadanoWebServicePort",
@@ -24,39 +27,80 @@ public class CiudadanoWebService {
     @Autowired
     private CiudadanoService ciudadanoService;
 
+    @Autowired
+    private CiudadanoMapper ciudadanoMapper;
+
     @WebMethod(operationName = "listarCiudadanos")
-    public List<CiudadanoResponse> listarCiudadanos() {
-        return ciudadanoService.findAll();
+    public List<CiudadanoResponseDTO> listarCiudadanos() {
+        List<Ciudadano> ciudadanos = ciudadanoService.findAllActivos();
+        return ciudadanos.stream()
+                .map(ciudadanoMapper::toResponseDTO)
+                .toList();
     }
 
     @WebMethod(operationName = "obtenerCiudadano")
-    public CiudadanoResponse obtenerCiudadano(@WebParam(name = "id") Long id) {
-        Optional<CiudadanoResponse> ciudadano = ciudadanoService.findById(id);
+    public CiudadanoResponseDTO obtenerCiudadano(@WebParam(name = "id") Long id) {
+        Optional<Ciudadano> ciudadano = ciudadanoService.findActivoById(id);
         if (ciudadano.isPresent()) {
-            return ciudadano.get();
+            return ciudadanoMapper.toResponseDTO(ciudadano.get());
         } else {
             throw new RuntimeException("Ciudadano no encontrado con ID: " + id);
         }
     }
 
+    @WebMethod(operationName = "obtenerCiudadanoPorDni")
+    public CiudadanoResponseDTO obtenerCiudadanoPorDni(@WebParam(name = "dni") String dni) {
+        Optional<Ciudadano> ciudadano = ciudadanoService.findActivoByDni(dni);
+        if (ciudadano.isPresent()) {
+            return ciudadanoMapper.toResponseDTO(ciudadano.get());
+        } else {
+            throw new RuntimeException("Ciudadano no encontrado con DNI: " + dni);
+        }
+    }
+
     @WebMethod(operationName = "crearCiudadano")
-    public CiudadanoResponse crearCiudadano(@WebParam(name = "ciudadanoRequest") CiudadanoRequest request) {
-        return ciudadanoService.save(request);
+    public CiudadanoResponseDTO crearCiudadano(@WebParam(name = "ciudadanoRequest") CiudadanoRequestDTO request) {
+        try {
+            Ciudadano ciudadano = ciudadanoService.crearCiudadano(request);
+            return ciudadanoMapper.toResponseDTO(ciudadano);
+        } catch (IllegalArgumentException e) {
+            throw new RuntimeException("Error al crear ciudadano: " + e.getMessage());
+        }
     }
 
     @WebMethod(operationName = "actualizarCiudadano")
-    public CiudadanoResponse actualizarCiudadano(@WebParam(name = "id") Long id, 
-                                                @WebParam(name = "ciudadanoRequest") CiudadanoRequest request) {
-        Optional<CiudadanoResponse> ciudadano = ciudadanoService.update(id, request);
-        if (ciudadano.isPresent()) {
-            return ciudadano.get();
-        } else {
-            throw new RuntimeException("Ciudadano no encontrado con ID: " + id);
+    public CiudadanoResponseDTO actualizarCiudadano(@WebParam(name = "id") Long id, 
+                                                   @WebParam(name = "ciudadanoRequest") CiudadanoRequestDTO request) {
+        try {
+            Optional<Ciudadano> ciudadano = ciudadanoService.actualizarCiudadano(id, request);
+            if (ciudadano.isPresent()) {
+                return ciudadanoMapper.toResponseDTO(ciudadano.get());
+            } else {
+                throw new RuntimeException("Ciudadano no encontrado con ID: " + id);
+            }
+        } catch (IllegalArgumentException e) {
+            throw new RuntimeException("Error al actualizar ciudadano: " + e.getMessage());
         }
     }
 
     @WebMethod(operationName = "eliminarCiudadano")
     public boolean eliminarCiudadano(@WebParam(name = "id") Long id) {
-        return ciudadanoService.delete(id);
+        return ciudadanoService.eliminarCiudadano(id);
+    }
+
+    @WebMethod(operationName = "buscarCiudadanosPorMunicipio")
+    public List<CiudadanoResponseDTO> buscarCiudadanosPorMunicipio(@WebParam(name = "municipio") String municipio) {
+        List<Ciudadano> ciudadanos = ciudadanoService.findByMunicipio(municipio);
+        return ciudadanos.stream()
+                .map(ciudadanoMapper::toResponseDTO)
+                .toList();
+    }
+
+    @WebMethod(operationName = "buscarCiudadanosPorProvincia")
+    public List<CiudadanoResponseDTO> buscarCiudadanosPorProvincia(@WebParam(name = "provincia") String provincia) {
+        List<Ciudadano> ciudadanos = ciudadanoService.findByProvincia(provincia);
+        return ciudadanos.stream()
+                .map(ciudadanoMapper::toResponseDTO)
+                .toList();
     }
 }
