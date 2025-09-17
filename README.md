@@ -9,23 +9,38 @@ Sistema de gestión ciudadana desarrollado con el framework AyWebFwk del Ayuntam
 
 ## 🏗️ Arquitectura
 
-El sistema sigue una arquitectura de capas bien definida:
+El sistema sigue una arquitectura de capas bien definida con separación clara de responsabilidades:
 
 ```
 Cliente Externo
      ↓ (SOAP)
 ciudadania360-basic-ws (Capa de Servicios Web)
      ↓ (Llamadas Java)
-ciudadania360-backend (Lógica de Negocio)
+ciudadania360-core (Lógica de Negocio Centralizada)
      ↓ (JPA/Hibernate)
 Base de Datos PostgreSQL
+     ↑
+ciudadania360-backend (Orquestador de Módulos)
 ```
+
+### **Módulos del Sistema:**
+
+- **`ciudadania360-backend`** - Aplicación principal (WAR) que orquesta todos los módulos
+- **`ciudadania360-core`** - Lógica de negocio centralizada (entidades, servicios, repositorios)
+- **`ciudadania360-basic-ws`** - Servicios web SOAP (ws-ciudadano)
+- **`ciudadania360-common-schematypes`** - DTOs y tipos compartidos
+- **`ciudadania360-resources`** - Configuraciones y recursos
 
 ## 📁 Estructura del Proyecto
 
 ```
 ciudadania360-aywebfwk/
-├── ciudadania360-backend/              # Aplicación principal (WAR)
+├── ciudadania360-backend/              # Aplicación principal (WAR) - Orquestador
+├── ciudadania360-core/                 # Lógica de negocio centralizada
+│   ├── entity/                         # Entidades JPA
+│   ├── repository/                     # Repositorios Spring Data
+│   ├── service/                        # Servicios de negocio
+│   └── mapper/                         # Mappers MapStruct
 ├── ciudadania360-basic-ws/             # Servicios web SOAP
 │   └── ws-ciudadano/                   # Servicio de ciudadanos
 ├── ciudadania360-common-schematypes/   # DTOs y tipos compartidos
@@ -78,6 +93,16 @@ ciudadania360-aywebfwk/
 - **Operaciones:** CRUD completo de ciudadanos
 - **Validaciones:** DNI, email, teléfono
 - **Endpoints:** 7 operaciones SOAP
+- **Arquitectura:** Separación clara entre capa de servicios y lógica de negocio
+
+### Operaciones SOAP Disponibles:
+1. `listarCiudadanos()` - Lista todos los ciudadanos activos
+2. `obtenerCiudadano(Long id)` - Obtiene un ciudadano por ID
+3. `crearCiudadano(CiudadanoRequestDTO)` - Crea un nuevo ciudadano
+4. `actualizarCiudadano(Long id, CiudadanoRequestDTO)` - Actualiza un ciudadano
+5. `eliminarCiudadano(Long id)` - Elimina un ciudadano (soft delete)
+6. `buscarCiudadanoPorDni(String dni)` - Busca ciudadano por DNI
+7. `buscarCiudadanoPorEmail(String email)` - Busca ciudadano por email
 
 ## 🧪 Testing
 
@@ -127,9 +152,9 @@ mvn test
 
 ## 📚 Documentación
 
-- [Arquitectura](docs/ARQUITECTURA.md) - Documentación técnica de la arquitectura
-- [Instrucciones de Ejecución](docs/INSTRUCCIONES-EJECUCION.md) - Guía detallada
-- [Resumen del Proyecto](docs/RESUMEN_PROYECTO.md) - Estado actual
+- [Scripts de Base de Datos](scripts/database/README.md) - Configuración PostgreSQL
+- [Scripts de Testing](scripts/testing/README.md) - Pruebas de servicios SOAP
+- [Documentación General](docs/README.md) - Documentación técnica completa
 
 ## 📞 Soporte
 

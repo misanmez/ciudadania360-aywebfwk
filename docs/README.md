@@ -3,7 +3,7 @@
 [![Java](https://img.shields.io/badge/Java-21-orange.svg)](https://openjdk.java.net/)
 [![Maven](https://img.shields.io/badge/Maven-3.9+-blue.svg)](https://maven.apache.org/)
 [![Spring](https://img.shields.io/badge/Spring-6.x-green.svg)](https://spring.io/)
-[![Oracle](https://img.shields.io/badge/Oracle-Database-red.svg)](https://www.oracle.com/database/)
+[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Database-blue.svg)](https://www.postgresql.org/)
 
 Sistema de gestión ciudadana desarrollado con el framework AyWebFwk del Ayuntamiento de Valencia.
 
@@ -16,16 +16,31 @@ Cliente Externo
      ↓ (SOAP)
 ciudadania360-basic-ws (Capa de Servicios Web)
      ↓ (Llamadas Java)
-ciudadania360-backend (Lógica de Negocio)
+ciudadania360-core (Lógica de Negocio Centralizada)
      ↓ (JPA/Hibernate)
-Base de Datos Oracle
+Base de Datos PostgreSQL
+     ↑
+ciudadania360-backend (Orquestador de Módulos)
 ```
+
+### **Módulos del Sistema:**
+
+- **`ciudadania360-backend`** - Aplicación principal (WAR) que orquesta todos los módulos
+- **`ciudadania360-core`** - Lógica de negocio centralizada (entidades, servicios, repositorios)
+- **`ciudadania360-basic-ws`** - Servicios web SOAP (ws-ciudadano)
+- **`ciudadania360-common-schematypes`** - DTOs y tipos compartidos
+- **`ciudadania360-resources`** - Configuraciones y recursos
 
 ## 📁 Estructura del Proyecto
 
 ```
 ciudadania360-aywebfwk/
-├── ciudadania360-backend/              # Aplicación principal (WAR)
+├── ciudadania360-backend/              # Aplicación principal (WAR) - Orquestador
+├── ciudadania360-core/                 # Lógica de negocio centralizada
+│   ├── entity/                         # Entidades JPA
+│   ├── repository/                     # Repositorios Spring Data
+│   ├── service/                        # Servicios de negocio
+│   └── mapper/                         # Mappers MapStruct
 ├── ciudadania360-basic-ws/             # Servicios web SOAP
 │   └── ws-ciudadano/                   # Servicio de ciudadanos
 ├── ciudadania360-common-schematypes/   # DTOs y tipos compartidos
@@ -33,7 +48,8 @@ ciudadania360-aywebfwk/
 ├── scripts/                            # Scripts de automatización
 │   ├── database/                       # Scripts de base de datos
 │   ├── development/                    # Scripts de desarrollo
-│   └── deployment/                     # Scripts de despliegue
+│   ├── deployment/                     # Scripts de despliegue
+│   └── testing/                        # Scripts de prueba
 ├── docs/                               # Documentación
 └── database/                           # Scripts SQL existentes
 ```
@@ -44,19 +60,19 @@ ciudadania360-aywebfwk/
 
 - **Java 21+**
 - **Maven 3.9+**
-- **Oracle Database 19c+**
+- **PostgreSQL 13+**
 - **Tomcat 10+** (para despliegue)
 
 ### Configuración Automática
 
 **Windows (CMD):**
 ```cmd
-.\scripts\development\setup-and-run-oracle.bat
+.\scripts\development\setup-and-run-postgresql.bat
 ```
 
 **Windows (PowerShell):**
 ```powershell
-.\scripts\development\setup-and-run-oracle.ps1
+.\scripts\development\setup-and-run-postgresql.ps1
 ```
 
 ### Inicio Rápido (si ya está configurado)
@@ -84,7 +100,7 @@ ciudadania360-aywebfwk/
 - **Spring Framework 6.x**
 - **Apache CXF 4.0.3** (SOAP)
 - **Hibernate 6.x** (JPA)
-- **Oracle Database**
+- **PostgreSQL Database**
 - **MapStruct 1.5.5**
 - **Lombok 1.18.30**
 
@@ -119,4 +135,4 @@ Para soporte técnico, contactar con el equipo de desarrollo del Ayuntamiento de
 
 **Versión:** 2.0.0  
 **Framework:** AyWebFwk + Spring Boot  
-**Base de Datos:** Oracle Database
+**Base de Datos:** PostgreSQL Database
