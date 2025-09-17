@@ -1,0 +1,280 @@
+# ===========================================
+# CIUDADANÍA360 - AYWEBFWK
+# Archivo .gitignore para proyecto Java/Spring
+# ===========================================
+
+# ===========================================
+# ARCHIVOS DE LOGS Y TEMPORALES
+# ===========================================
+*.log
+*.log.*
+*.out
+*.err
+*.tmp
+*.temp
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# Archivos de logs específicos del proyecto
+app-logs*.txt
+application-logs*.txt
+maven-logs*.txt
+spring-boot-logs*.txt
+
+# ===========================================
+# MAVEN
+# ===========================================
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
+.mvn/wrapper/maven-wrapper.jar
+
+# ===========================================
+# JAVA
+# ===========================================
+*.class
+*.jar
+*.war
+*.ear
+*.nar
+hs_err_pid*
+replay_pid*
+
+# ===========================================
+# IDE - IntelliJ IDEA
+# ===========================================
+.idea/
+*.iws
+*.iml
+*.ipr
+out/
+
+# ===========================================
+# IDE - Eclipse
+# ===========================================
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+bin/
+!**/src/main/**/bin/
+!**/src/test/**/bin/
+
+# ===========================================
+# IDE - NetBeans
+# ===========================================
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+
+# ===========================================
+# IDE - VS Code
+# ===========================================
+.vscode/
+*.code-workspace
+
+# ===========================================
+# SPRING BOOT
+# ===========================================
+.gradle
+build/
+!gradle/wrapper/gradle-wrapper.jar
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+# ===========================================
+# BASE DE DATOS
+# ===========================================
+*.db
+*.sqlite
+*.sqlite3
+*.h2.db
+*.mv.db
+*.trace.db
+
+# Archivos de configuración de base de datos locales
+application-local.properties
+application-dev.properties
+database-local.properties
+
+# ===========================================
+# ARCHIVOS DE CONFIGURACIÓN SENSIBLES
+# ===========================================
+# Credenciales y configuraciones sensibles
+*.key
+*.pem
+*.p12
+*.jks
+*.keystore
+*.truststore
+secrets.properties
+credentials.properties
+config-local.properties
+
+# ===========================================
+# ARCHIVOS DE DESARROLLO Y TESTING
+# ===========================================
+# Archivos de prueba temporales
+test-results/
+test-output/
+coverage/
+*.coverage
+*.lcov
+
+# Archivos de profiling
+*.hprof
+*.jfr
+
+# ===========================================
+# ARCHIVOS DE SISTEMA OPERATIVO
+# ===========================================
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+*.cab
+*.msi
+*.msix
+*.msm
+*.msp
+*.lnk
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+._*
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
+
+# Linux
+*~
+.fuse_hidden*
+.directory
+.Trash-*
+.nfs*
+
+# ===========================================
+# ARCHIVOS DE DEPLOYMENT Y CONTAINERS
+# ===========================================
+# Docker
+Dockerfile.local
+docker-compose.override.yml
+.dockerignore
+
+# Kubernetes
+*.kubeconfig
+kube-config-*
+
+# ===========================================
+# ARCHIVOS DE MONITOREO Y MÉTRICAS
+# ===========================================
+# Actuator y métricas
+actuator-logs/
+metrics/
+health-checks/
+
+# ===========================================
+# ARCHIVOS DE BACKUP Y VERSIONADO
+# ===========================================
+*.bak
+*.backup
+*.old
+*.orig
+*.rej
+*.patch
+*.diff
+
+# ===========================================
+# ARCHIVOS DE DOCUMENTACIÓN GENERADA
+# ===========================================
+# Javadoc generado
+javadoc/
+docs/generated/
+
+# ===========================================
+# ARCHIVOS DE CACHE Y TEMPORALES
+# ===========================================
+.cache/
+.tmp/
+.temp/
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# ===========================================
+# ARCHIVOS ESPECÍFICOS DEL PROYECTO
+# ===========================================
+# Archivos de configuración de desarrollo local
+local-config/
+dev-config/
+personal-config/
+
+# Archivos de datos de prueba
+test-data/
+sample-data/
+mock-data/
+
+# Archivos de scripts temporales
+temp-scripts/
+debug-scripts/
+
+# ===========================================
+# EXCEPCIONES - ARCHIVOS QUE SÍ DEBEN SUBIRSE
+# ===========================================
+# Mantener archivos importantes
+!README.md
+!LICENSE
+!CHANGELOG.md
+!CONTRIBUTING.md
+!docs/**/*.md
+!scripts/**/*.md
+!scripts/**/*.bat
+!scripts/**/*.ps1
+!scripts/**/*.sql
+
+# Mantener archivos de configuración importantes
+!application.properties
+!application-*.properties
+!pom.xml
+!*.xml
+!*.yml
+!*.yaml
+
+# ===========================================
+# NOTAS
+# ===========================================
+# Este archivo .gitignore está diseñado específicamente para:
+# - Proyectos Java/Spring Boot
+# - Maven como gestor de dependencias
+# - PostgreSQL como base de datos
+# - Desarrollo en Windows/macOS/Linux
+# - IDEs: IntelliJ IDEA, Eclipse, VS Code
+# - Frameworks: Spring Boot, Apache CXF, Hibernate
