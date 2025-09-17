@@ -6,32 +6,33 @@ Este documento contiene las instrucciones paso a paso para configurar y ejecutar
 ## 📋 Prerrequisitos
 
 ### 1. PostgreSQL
-- **Versión:** PostgreSQL 12 o superior
+- **Versión:** PostgreSQL 13 o superior
 - **Puerto:** 5432 (por defecto)
 - **Usuario:** postgres (con permisos de administrador)
+- **Contraseña:** Aqmdla04 (configurada en scripts)
 
 ### 2. Java
 - **Versión:** Java 21
 - **Variables de entorno:** JAVA_HOME configurado
 
 ### 3. Maven
-- **Versión:** Maven 3.8 o superior
+- **Versión:** Maven 3.9 o superior
 - **Variables de entorno:** MAVEN_HOME configurado
 
 ## 🛠️ Configuración Automática Completa
 
 ### ⚡ Ejecución en Un Solo Paso
 
-El sistema ahora incluye **inicialización automática completa**. Solo necesitas ejecutar:
+El sistema incluye **scripts de inicialización automática**. Ejecuta uno de estos comandos:
 
 **Windows (CMD):**
 ```cmd
-.\setup-and-run.bat
+.\scripts\development\setup-and-run-postgresql.bat
 ```
 
 **Windows (PowerShell):**
 ```powershell
-.\setup-and-run.ps1
+.\scripts\development\setup-and-run-postgresql.ps1
 ```
 
 ### 🔄 ¿Qué hace el script automático?
@@ -48,11 +49,10 @@ El sistema ahora incluye **inicialización automática completa**. Solo necesita
 
 La aplicación ejecuta automáticamente estos scripts en orden:
 
-1. `01-create-database-and-user.sql` - Crea usuario y base de datos
-2. `02-create-schemas.sql` - Crea esquemas por módulo
-3. `03-create-tables.sql` - Crea todas las tablas
-4. `04-create-indexes.sql` - Crea índices de optimización
-5. `05-insert-sample-data.sql` - Inserta datos de prueba
+1. `01-setup-postgresql-database.sql` - Crea usuario y base de datos
+2. `02-setup-postgresql-schemas.sql` - Crea esquemas por módulo
+3. `03-setup-postgresql-tables.sql` - Crea todas las tablas
+4. `04-setup-postgresql-sample-data.sql` - Inserta datos de prueba
 
 ## 🌐 Acceso a la Aplicación
 
@@ -64,16 +64,17 @@ Una vez ejecutándose, la aplicación estará disponible en:
 ## 🔧 Servicios SOAP Disponibles
 
 ### Servicio de Ciudadanos
-- **Endpoint:** http://localhost:8080/ciudadania360/services/ciudadano
-- **WSDL:** http://localhost:8080/ciudadania360/services/ciudadano?wsdl
+- **Endpoint:** http://localhost:8080/ciudadania360/services/CiudadanoWebService
+- **WSDL:** http://localhost:8080/ciudadania360/services/CiudadanoWebService?wsdl
 
 ### Operaciones Disponibles:
-- `findAll()` - Obtener todos los ciudadanos
-- `findById(Long id)` - Buscar ciudadano por ID
-- `findByDni(String dni)` - Buscar ciudadano por DNI
-- `save(CiudadanoRequest request)` - Crear nuevo ciudadano
-- `update(Long id, CiudadanoRequest request)` - Actualizar ciudadano
-- `delete(Long id)` - Eliminar ciudadano (soft delete)
+1. `listarCiudadanos()` - Obtener todos los ciudadanos activos
+2. `obtenerCiudadano(Long id)` - Buscar ciudadano por ID
+3. `crearCiudadano(CiudadanoRequestDTO)` - Crear nuevo ciudadano
+4. `actualizarCiudadano(Long id, CiudadanoRequestDTO)` - Actualizar ciudadano
+5. `eliminarCiudadano(Long id)` - Eliminar ciudadano (soft delete)
+6. `buscarCiudadanoPorDni(String dni)` - Buscar ciudadano por DNI
+7. `buscarCiudadanoPorEmail(String email)` - Buscar ciudadano por email
 
 ## 🗄️ Estructura de Base de Datos
 
@@ -101,6 +102,30 @@ La aplicación crea automáticamente:
 - **5 procesos de IA** con resultados
 - **8 informaciones** públicas y privadas
 
+## 🧪 Testing
+
+### Scripts de Prueba Disponibles
+
+**Prueba completa de servicios SOAP:**
+```powershell
+.\scripts\testing\test-soap-services.ps1
+```
+
+**Prueba rápida de salud:**
+```powershell
+.\scripts\testing\quick-test.ps1
+```
+
+**Con información detallada:**
+```powershell
+.\scripts\testing\test-soap-services.ps1 -Verbose
+```
+
+### Endpoints de Prueba
+- **Salud:** http://localhost:8080/ciudadania360/api/health
+- **WSDL:** http://localhost:8080/ciudadania360/services/CiudadanoWebService?wsdl
+- **SOAP:** http://localhost:8080/ciudadania360/services/CiudadanoWebService
+
 ## 🐛 Solución de Problemas
 
 ### Error de Conexión a Base de Datos
@@ -109,7 +134,7 @@ FATAL: la autentificación password falló para el usuario 'ciudadania360'
 ```
 
 **Solución:**
-1. Ejecutar `.\setup-and-run.bat` o `.\setup-and-run.ps1`
+1. Ejecutar `.\scripts\development\setup-and-run-postgresql.bat` o `.\scripts\development\setup-and-run-postgresql.ps1`
 2. El script elimina y recrea todo desde cero
 
 ### Error de Puerto en Uso
@@ -129,12 +154,21 @@ Could not find artifact es.valencia:ciudadania360-common-schematypes
 **Solución:**
 El script automático ya incluye `mvn clean install -DskipTests`
 
+### Error de Flyway
+```
+Unable to obtain inputstream for resource: db/migration/V1__Initial_schema.sql
+```
+
+**Solución:**
+1. Verificar que los archivos de migración existan en `ciudadania360-backend/src/main/resources/db/migration/`
+2. O deshabilitar Flyway temporalmente en `application.properties`: `spring.flyway.enabled=false`
+
 ## 🔄 Reinicialización Completa
 
 Si necesitas empezar de nuevo:
 
 1. **Detener** la aplicación (Ctrl+C)
-2. **Ejecutar** `.\setup-and-run.bat` o `.\setup-and-run.ps1`
+2. **Ejecutar** `.\scripts\development\setup-and-run-postgresql.bat` o `.\scripts\development\setup-and-run-postgresql.ps1`
 3. El sistema eliminará todo y creará desde cero
 
 ## 📊 Verificación de Funcionamiento
@@ -148,10 +182,41 @@ Conecta con DBeaver a:
 - Contraseña: `ciudadania360`
 
 ### 2. Verificar Servicios SOAP
-Accede a: http://localhost:8080/ciudadania360/services/ciudadano?wsdl
+Accede a: http://localhost:8080/ciudadania360/services/CiudadanoWebService?wsdl
 
 ### 3. Verificar Datos
 Consulta las tablas para verificar que los datos de prueba se insertaron correctamente.
+
+### 4. Verificar Logs
+Los logs de la aplicación se muestran en la consola. Busca mensajes como:
+- `Started Application in X.XXX seconds`
+- `Tomcat started on port 8080`
+- `Creating Service {http://ws.ciudadania360.valencia.es/}CiudadanoWebService`
+
+## 🔧 Configuración Manual (Opcional)
+
+Si prefieres configurar manualmente:
+
+### 1. Base de Datos
+```sql
+-- Conectar como postgres
+psql -U postgres -h localhost
+
+-- Crear usuario y base de datos
+CREATE USER ciudadania360 WITH PASSWORD 'ciudadania360';
+CREATE DATABASE ciudadania360 OWNER ciudadania360;
+GRANT ALL PRIVILEGES ON DATABASE ciudadania360 TO ciudadania360;
+```
+
+### 2. Compilación
+```bash
+mvn clean install -DskipTests
+```
+
+### 3. Ejecución
+```bash
+mvn spring-boot:run -pl ciudadania360-backend
+```
 
 ## 📞 Soporte
 
@@ -159,9 +224,10 @@ Para problemas o dudas:
 1. Verificar los logs de la aplicación
 2. Ejecutar el script de reinicialización completa
 3. Comprobar que todos los prerrequisitos estén instalados
+4. Revisar la documentación de [Arquitectura](ARQUITECTURA.md)
 
 ---
 **Versión:** 2.0.0  
-**Fecha:** 2024-01-16  
+**Fecha:** 2025-09-17  
 **Framework:** AyWebFwk + Spring Boot  
 **Característica:** Inicialización automática completa

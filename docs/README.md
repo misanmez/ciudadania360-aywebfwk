@@ -4,12 +4,13 @@
 [![Maven](https://img.shields.io/badge/Maven-3.9+-blue.svg)](https://maven.apache.org/)
 [![Spring](https://img.shields.io/badge/Spring-6.x-green.svg)](https://spring.io/)
 [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Database-blue.svg)](https://www.postgresql.org/)
+[![Apache CXF](https://img.shields.io/badge/Apache-CXF-orange.svg)](https://cxf.apache.org/)
 
 Sistema de gestión ciudadana desarrollado con el framework AyWebFwk del Ayuntamiento de Valencia.
 
 ## 🏗️ Arquitectura
 
-El sistema sigue una arquitectura de capas bien definida:
+El sistema sigue una arquitectura de capas bien definida con separación clara de responsabilidades:
 
 ```
 Cliente Externo
@@ -92,7 +93,17 @@ ciudadania360-aywebfwk/
 ### ws-ciudadano
 - **Operaciones:** CRUD completo de ciudadanos
 - **Validaciones:** DNI, email, teléfono
-- **Endpoints:** 6 operaciones SOAP
+- **Endpoints:** 7 operaciones SOAP
+- **Arquitectura:** Separación clara entre capa de servicios y lógica de negocio
+
+### Operaciones SOAP Disponibles:
+1. `listarCiudadanos()` - Lista todos los ciudadanos activos
+2. `obtenerCiudadano(Long id)` - Obtiene un ciudadano por ID
+3. `crearCiudadano(CiudadanoRequestDTO)` - Crea un nuevo ciudadano
+4. `actualizarCiudadano(Long id, CiudadanoRequestDTO)` - Actualiza un ciudadano
+5. `eliminarCiudadano(Long id)` - Elimina un ciudadano (soft delete)
+6. `buscarCiudadanoPorDni(String dni)` - Busca ciudadano por DNI
+7. `buscarCiudadanoPorEmail(String email)` - Busca ciudadano por email
 
 ## 🛠️ Tecnologías
 
@@ -108,7 +119,9 @@ ciudadania360-aywebfwk/
 
 - [Arquitectura](ARQUITECTURA.md) - Documentación técnica de la arquitectura
 - [Instrucciones de Ejecución](INSTRUCCIONES-EJECUCION.md) - Guía detallada
-- [Resumen del Proyecto](RESUMEN_PROYECTO.md) - Estado actual
+- [API SOAP](API-SOAP.md) - Documentación completa de servicios SOAP
+- [Scripts de Base de Datos](../scripts/database/README.md) - Configuración PostgreSQL
+- [Scripts de Testing](../scripts/testing/README.md) - Pruebas de servicios SOAP
 
 ## 🔄 Desarrollo
 
